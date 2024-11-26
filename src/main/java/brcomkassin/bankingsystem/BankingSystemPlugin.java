@@ -5,6 +5,7 @@ import brcomkassin.bankingsystem.bankaccount.DefaultBankAccountService;
 import brcomkassin.bankingsystem.cache.BankAccountCache;
 import brcomkassin.bankingsystem.cache.DefaultBankAccountCache;
 import brcomkassin.bankingsystem.commands.BankAccountCommand;
+import brcomkassin.bankingsystem.commands.BankAccountCommandManager;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -12,8 +13,7 @@ public final class BankingSystemPlugin extends JavaPlugin {
 
     @Getter
     private static BankingSystemPlugin instance;
-    private final BankAccountCache bankAccountCache = new DefaultBankAccountCache();
-    private final DefaultBankAccountService bankAccountService = new DefaultBankAccountService(bankAccountCache);
+    private final BankAccountCommandManager bankAccountCommandManager = new BankAccountCommandManager(this);
 
     @Override
     public void onLoad() {
@@ -22,7 +22,7 @@ public final class BankingSystemPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        getCommand("account").setExecutor(new BankAccountCommand(bankAccountService));
+        bankAccountCommandManager.loadAllCommands();
     }
 
     @Override

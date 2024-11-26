@@ -1,7 +1,6 @@
 package brcomkassin.bankingsystem.bankaccount;
 
 import brcomkassin.bankingsystem.cache.BankAccountCache;
-import brcomkassin.bankingsystem.cache.DefaultBankAccountCache;
 import org.bukkit.entity.Player;
 
 public class DefaultBankAccountService implements BankAccountService {
