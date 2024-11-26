@@ -1,17 +1,23 @@
 package brcomkassin.bankingsystem;
 
+import brcomkassin.bankingsystem.bankaccount.BankAccountService;
+import brcomkassin.bankingsystem.bankaccount.DefaultBankAccountService;
+import brcomkassin.bankingsystem.cache.BankAccountCache;
+import brcomkassin.bankingsystem.cache.DefaultBankAccountCache;
+import brcomkassin.bankingsystem.commands.BankAccountCommand;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 
-@Getter
 public final class BankingSystemPlugin extends JavaPlugin {
 
-    private BankingSystemPlugin instance;
-    private final BankAccountService bankAccountService = new BankAccountService();
+    @Getter
+    private static BankingSystemPlugin instance;
+    private final BankAccountCache bankAccountCache = new DefaultBankAccountCache();
+    private final DefaultBankAccountService bankAccountService = new DefaultBankAccountService(bankAccountCache);
 
     @Override
     public void onLoad() {
-        this.instance = this;
+        instance = this;
     }
 
     @Override
@@ -23,4 +29,5 @@ public final class BankingSystemPlugin extends JavaPlugin {
     public void onDisable() {
 
     }
+
 }
