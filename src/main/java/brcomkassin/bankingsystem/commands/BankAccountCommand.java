@@ -1,15 +1,12 @@
 package brcomkassin.bankingsystem.commands;
 
-import brcomkassin.bankingsystem.bankaccount.BankAccount;
 import brcomkassin.bankingsystem.bankaccount.BankAccountService;
-import brcomkassin.bankingsystem.bankaccount.DefaultBankAccountService;
-import brcomkassin.bankingsystem.cache.BankAccountCache;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class BankAccountCommand implements CommandExecutor {
+public final class BankAccountCommand implements CommandExecutor {
 
     private final BankAccountService bankAccountService;
 

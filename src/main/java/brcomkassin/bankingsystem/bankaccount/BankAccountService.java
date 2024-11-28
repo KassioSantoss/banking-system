@@ -5,5 +5,7 @@ import org.bukkit.entity.Player;
 public interface BankAccountService {
 
     void create(Player player);
+    void remove(Player player);
+
 
 }

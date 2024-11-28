@@ -3,7 +3,7 @@ package brcomkassin.bankingsystem.bankaccount;
 import brcomkassin.bankingsystem.cache.BankAccountCache;
 import org.bukkit.entity.Player;
 
-public class DefaultBankAccountService implements BankAccountService {
+public final class DefaultBankAccountService implements BankAccountService {
 
     private final BankAccountCache bankAccountCache;
 
@@ -13,9 +13,22 @@ public class DefaultBankAccountService implements BankAccountService {
 
     @Override
     public void create(Player player) {
+        if (bankAccountCache.hasAccount(player)) {
+            player.sendMessage("Voce já possui uma conta!");
+            return;
+        }
+
         BankAccount bankAccount = new BankAccount();
-        bankAccountCache.addAccount(player.getName(), bankAccount);
+        String owner = player.getName();
+        bankAccountCache.addAccount(owner, bankAccount);
+        bankAccount.setOwner(owner);
+        bankAccount.setValue(0);
         player.sendMessage("Voce criou uma conta!");
+    }
+
+    @Override
+    public void remove(Player player) {
+        bankAccountCache.removeAccount(player.getName());
     }
 
 }
