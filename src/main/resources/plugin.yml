@@ -1,3 +1,5 @@
 name: banking-system
 version: '${project.version}'
 main: brcomkassin.bankingsystem.BankingSystemPlugin
+commands:
+  account:

@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 
 public final class DefaultBankAccountService implements BankAccountService {
 
+    private static DefaultBankAccountService instance;
     private final BankAccountCache bankAccountCache;
 
     public DefaultBankAccountService(BankAccountCache bankAccountCache) {
@@ -15,6 +16,7 @@ public final class DefaultBankAccountService implements BankAccountService {
     public void create(Player player) {
         if (bankAccountCache.hasAccount(player)) {
             player.sendMessage("Voce já possui uma conta!");
+            player.closeInventory();
             return;
         }
 
@@ -24,6 +26,7 @@ public final class DefaultBankAccountService implements BankAccountService {
         bankAccount.setOwner(owner);
         bankAccount.setValue(0);
         player.sendMessage("Voce criou uma conta!");
+        player.closeInventory();
     }
 
     @Override

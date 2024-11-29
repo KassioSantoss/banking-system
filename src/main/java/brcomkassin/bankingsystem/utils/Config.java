@@ -1,4 +1,4 @@
-package brcomkassin.bankingsystem;
+package brcomkassin.bankingsystem.utils;
 
 import lombok.Getter;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -15,7 +15,7 @@ public final class Config extends YamlConfiguration {
 
     public Config(JavaPlugin plugin, String name) {
         this.plugin = plugin;
-        this.name = name + ".yml";
+        this.name = name;
         file = new File(plugin.getDataFolder(), name);
     }
 

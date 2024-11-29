@@ -1,6 +1,7 @@
 package brcomkassin.bankingsystem;
 
-import brcomkassin.bankingsystem.commands.RegisterCommandManager;
+import brcomkassin.bankingsystem.registers.RegisterServiceManager;
+import brcomkassin.bankingsystem.utils.Config;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.milkbowl.vault.economy.Economy;
@@ -9,13 +10,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class BankingSystemPlugin extends JavaPlugin {
 
-    @Getter
-    private static BankingSystemPlugin instance;
-    @Getter
-    private static Economy economy;
-    private final RegisterCommandManager bankAccountCommandManager = new RegisterCommandManager(this);
-    @Getter
-    private final Config config = new Config(this, "config");
+    @Getter private static BankingSystemPlugin instance;
+    @Getter  private static Economy economy;
+    @Getter private final Config config = new Config(this, "config.yml");
+    private final RegisterServiceManager registerServiceManager = new RegisterServiceManager(this);
 
     @Override
     public void onLoad() {
@@ -25,14 +23,11 @@ public final class BankingSystemPlugin extends JavaPlugin {
     @SneakyThrows
     @Override
     public void onEnable() {
-        if (!setupEconomy()) {
-            getLogger().severe("Vault não encontrado ou não há um plugin de economia ativo!");
-            getServer().getPluginManager().disablePlugin(this);
-            return;
-        }
-        getLogger().info("Vault integrado com sucesso!");
+        if (!setupEconomy()) return;
+
         config.saveAndReloadDefaultConfig();
-        bankAccountCommandManager.loadAllCommands();
+        registerServiceManager.createCommandService().load();
+        registerServiceManager.createListenerService().load();
     }
 
     @SneakyThrows
@@ -44,9 +39,12 @@ public final class BankingSystemPlugin extends JavaPlugin {
     public boolean setupEconomy() {
         RegisteredServiceProvider<Economy> provider = getServer().getServicesManager().getRegistration(Economy.class);
         if (provider == null) {
+            getLogger().severe("Vault não encontrado ou não há um plugin de economia ativo!");
+            getServer().getPluginManager().disablePlugin(this);
             return false;
         }
         economy = provider.getProvider();
+        getLogger().info("Vault integrado com sucesso!");
         return true;
     }
 

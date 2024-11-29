@@ -23,11 +23,13 @@ public class ClickBankAccountMenuListener implements Listener {
         Player player = (Player) event.getWhoClicked();
 
         if (!view.getTitle().equals(title)) return;
-        int slot = 0;
+        event.setCancelled(true);
+        int slot = event.getSlot();
 
         switch (slot) {
             case 10:
                 bankAccountService.create(player);
+                break;
         }
 
     }
