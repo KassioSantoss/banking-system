@@ -17,7 +17,7 @@ public class RegisterListenerService implements Register {
 
     public RegisterListenerService(BankingSystemPlugin plugin, BankInventoryManager inventoryManager, BankAccountCache bankAccountCache, BankAccountService bankAccountService) {
         this.plugin = plugin;
-        this.clickMenuListener = new ClickBankAccountMenuListener(bankAccountService);
+        this.clickMenuListener = new ClickBankAccountMenuListener(bankAccountCache, bankAccountService);
         this.openMenuListener = new OpenBankAccountMenuListener(bankAccountCache, inventoryManager);
     }
 

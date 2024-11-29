@@ -7,5 +7,4 @@ public interface BankAccountService {
     void create(Player player);
     void remove(Player player);
 
-
 }
